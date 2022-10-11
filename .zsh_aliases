@@ -4,9 +4,6 @@ alias ohmyzsh="sudo emacs ~/.oh-my-zsh"
 alias cp='cp -iv'
 alias rm='rm -iv'
 alias mv='mv -iv'
-alias du='du -hc'
-alias dua='du -ahc --time'
-alias dus='du -hs'
 alias cd..='cd ..'
 alias cddev='cd /media/aviemet/Dev'
 alias lsa='ls -AlFvh --color=auto --group-directories-first'
@@ -14,22 +11,36 @@ alias lsl='ls -lFvh --color=auto --group-directories-first'
 alias lsd='ls -dlvh */ --color=auto --group-directories-first'
 alias lsg='ls -AlFvh --color=auto --group-directories-first | grep'
 alias pcat='pygmentize -O full,style-emacs'
-alias palias='alias | pygmentize -O full,style=emacs -l bash | less'
-alias aliases='pygmentize -O full,style=emacs -l bash ~/.zsh_aliases | less'
-alias gits='cat ~/.gitconfig'
-alias pm='python manage.py'
-alias myip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias mkdir='mkdir -p-v'
+alias wget='wget -c'
+
+alias fhere='find . -name '
+
 alias emacs="emacs --no-window-system"
 alias sumacs="sudo emacs --no-window-system"
+
+alias pm='python manage.py'
 alias supg="sudo -u postgres psql postgres"
 alias im="./bin/importmap"
-alias ip="ip -c"
-alias ips="sudo ip -br -c addr show"
-alias macs="sudo ip -br -c link show"
 
+alias du='du -hc'
+alias dua='du -ahc --time'
+alias dus='du -hs'
+alias df='df -THa --total'
+alias free='free -mt'
+alias macs="sudo ip -br -c link show"
+alias ps='ps auxf'
+alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias ram="ps axch -o cmd:15,%mem --sort=-%mem | head"
 alias cpu="ps axch -o cmd:15,%cpu --sorg=-%cpu | head"
 alias mhz="watch -n 1 'cat /proc/cpuinfo | grep MHz'"
+alias myip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
+alias ip="ip -c"
+alias ips="sudo ip -br -c addr show"
 
 alias aptinstall='sudo apt-get update && sudo apt-get install -y'
 alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y'
+
+alias palias='alias | pygmentize -O full,style=emacs -l bash | less'
+alias aliases='pygmentize -O full,style=emacs -l bash ~/.zsh_aliases | less'
+alias gits='cat ~/.gitconfig'
