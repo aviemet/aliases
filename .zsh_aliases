@@ -6,13 +6,31 @@ alias rm='rm -iv'
 alias mv='mv -iv'
 alias cd..='cd ..'
 alias cddev='cd /media/aviemet/Dev'
-alias lsa='ls -AlFvh --color=auto --group-directories-first'
-alias lsl='ls -lFvh --color=auto --group-directories-first'
-alias lsd='ls -dlvh */ --color=auto --group-directories-first'
-alias lsg='ls -AlFvh --color=auto --group-directories-first | grep'
 alias pcat='pygmentize -O full,style-emacs'
-alias mkdir='mkdir -p-v'
+alias mkdir='mkdir -pv'
 alias wget='wget -c'
+
+if [[ $(uname) == "Darwin" ]]
+then
+
+  alias lsa='LC_COLLATE=cs_CZ.ISO8859-2 ls -AlhF'
+  alias lsl='LC_COLLATE=cs_CZ.ISO8859-2 ls -lhFv'
+  alias lsd='LC_COLLATE=cs_CZ.ISO8859-2 ls -dlhv */'
+  alias lsg='LC_COLLATE=cs_CZ.ISO8859-2 ls -alhFv | grep'
+
+  alias flushdns="sudo killall -HUP mDNSResponder; sleep 2;"
+
+else
+
+  alias aptinstall='sudo apt-get update && sudo apt-get install -y'
+  alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y'
+
+  alias lsa='ls -AlFvh --color=auto --group-directories-first'
+  alias lsl='ls -lFvh --color=auto --group-directories-first'
+  alias lsd='ls -dlvh */ --color=auto --group-directories-first'
+  alias lsg='ls -AlFvh --color=auto --group-directories-first | grep'
+
+fi
 
 alias fhere='find . -name '
 
@@ -37,9 +55,6 @@ alias mhz="watch -n 1 'cat /proc/cpuinfo | grep MHz'"
 alias myip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
 alias ip="ip -c"
 alias ips="sudo ip -br -c addr show"
-
-alias aptinstall='sudo apt-get update && sudo apt-get install -y'
-alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y'
 
 alias palias='alias | pygmentize -O full,style=emacs -l bash | less'
 alias aliases='pygmentize -O full,style=emacs -l bash ~/.zsh_aliases | less'
