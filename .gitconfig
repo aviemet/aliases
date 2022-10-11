@@ -1,0 +1,27 @@
+[alias]
+        st = status
+        br = branch
+        ci = commit -m
+        co = checkout
+        cob = checkout -b
+        cia = !git add -A && git commit -m
+	mff = merge --no-ff
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ / | sort
+        hist = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        save = !git add -A && git commit -m 'SAVEPOINT'
+        undo = reset HEAD~1 --mixed
+        amend = commit --amend --no-edit
+        wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+        destroy = reset HEAD~1 --hard
+        bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+        up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+        bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+[user]
+        name = Avram Walden
+        email = aviemet@gmail.com
+[core]
+	editor = emacs
+[push]
+	default = current
+[pager]
+	branch = false
