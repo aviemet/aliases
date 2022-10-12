@@ -5,32 +5,72 @@ alias cp='cp -iv'
 alias rm='rm -iv'
 alias mv='mv -iv'
 alias cd..='cd ..'
-alias cddev='cd /media/aviemet/Dev'
 alias pcat='pygmentize -O full,style-emacs'
 alias mkdir='mkdir -pv'
 alias wget='wget -c'
 
-if [[ $(uname) == "Darwin" ]]
-then
-
-  alias lsa='LC_COLLATE=cs_CZ.ISO8859-2 ls -AlhF'
-  alias lsl='LC_COLLATE=cs_CZ.ISO8859-2 ls -lhFv'
-  alias lsd='LC_COLLATE=cs_CZ.ISO8859-2 ls -dlhv */'
-  alias lsg='LC_COLLATE=cs_CZ.ISO8859-2 ls -alhFv | grep'
-
+if [ "$(uname)" = "Darwin" ]; then
+  # Mac only aliases
   alias flushdns="sudo killall -HUP mDNSResponder; sleep 2;"
+  alias ips="ifconfig | grep inet"
+  alias macs="networksetup -listallhardwareports"
 
+  alias dua='du -ahc'
+  alias df='df -THa'
+
+  # Alias ls if gls is available
+  if [ -n "$(command -v gls)" ]; then
+    alias ls='gls'
+  else
+    # Otherwise use Mac ls
+    alias lsa='LC_COLLATE=cs_CZ.ISO8859-2 ls -AlhF'
+    alias lsl='LC_COLLATE=cs_CZ.ISO8859-2 ls -lhFv'
+    alias lsd='LC_COLLATE=cs_CZ.ISO8859-2 ls -dlhv */'
+    alias lsg='LC_COLLATE=cs_CZ.ISO8859-2 ls -alhFv | grep'
+  fi
 else
-
+  # Non-Mac only aliases
   alias aptinstall='sudo apt-get update && sudo apt-get install -y'
   alias update='sudo apt-get update && sudo apt-get upgrade -y && sudo apt dist-upgrade -y && sudo apt autoremove -y'
 
+  alias dua='du -ahc --time'
+  alias df='df -THa --total'
+
+  alias ram="\ps axch -o cmd:15,%mem --sort=-%mem | head"
+  alias cpu="\ps axch -o cmd:15,%cpu --sorg=-%cpu | head"
+
+  # ip
+  if [ -n "$(command -v ip)" ]; then
+    alias ip="ip -c"
+    alias ips="sudo ip -br addr show"
+    alias macs="sudo ip -br link show"
+  fi
+fi
+
+# Runs if not Mac, or if Mac && ls was aliased gls above
+if [ "$(uname)" != "Darwin" ] || [ -n "$(command -v gls)" ]; then
   alias lsa='ls -AlFvh --color=auto --group-directories-first'
   alias lsl='ls -lFvh --color=auto --group-directories-first'
   alias lsd='ls -dlvh */ --color=auto --group-directories-first'
   alias lsg='ls -AlFvh --color=auto --group-directories-first | grep'
-
 fi
+
+# watch
+if [ -n "$(command -v watch)" ]; then
+  alias mhz="watch -n 1 'cat /proc/cpuinfo | grep MHz'"
+fi
+
+# free
+if [ -n "$(command -v free)" ]; then
+  alias free='free -mt'
+fi
+
+
+alias dus='du -hs'
+alias du='du -hc'
+
+alias psg='\ps aux | grep -v grep | grep -i -e VSZ -e'
+alias ps='ps aux'
 
 alias fhere='find . -name '
 
@@ -41,20 +81,7 @@ alias pm='python manage.py'
 alias supg="sudo -u postgres psql postgres"
 alias im="./bin/importmap"
 
-alias du='du -hc'
-alias dua='du -ahc --time'
-alias dus='du -hs'
-alias df='df -THa --total'
-alias free='free -mt'
-alias macs="sudo ip -br -c link show"
-alias ps='ps auxf'
-alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
-alias ram="ps axch -o cmd:15,%mem --sort=-%mem | head"
-alias cpu="ps axch -o cmd:15,%cpu --sorg=-%cpu | head"
-alias mhz="watch -n 1 'cat /proc/cpuinfo | grep MHz'"
 alias myip="curl -s checkip.dyndns.org|sed -e 's/.*Current IP Address: //' -e 's/<.*$//'"
-alias ip="ip -c"
-alias ips="sudo ip -br -c addr show"
 
 alias palias='alias | pygmentize -O full,style=emacs -l bash | less'
 alias aliases='pygmentize -O full,style=emacs -l bash ~/.zsh_aliases | less'
